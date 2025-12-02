@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Category } from "@/types/database";
+import { getCategoryImage } from "@/lib/categoryImages";
 
 interface CategoryCardProps {
   category: Category;
@@ -8,6 +9,8 @@ interface CategoryCardProps {
 }
 
 export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
+  const imageUrl = category.image_url || getCategoryImage(category.name);
+
   return (
     <Link
       to={`/categories/${category.id}`}
@@ -16,9 +19,9 @@ export function CategoryCard({ category, index = 0 }: CategoryCardProps) {
     >
       {/* Background Image */}
       <div className="absolute inset-0 bg-muted">
-        {category.image_url ? (
+        {imageUrl ? (
           <img
-            src={category.image_url}
+            src={imageUrl}
             alt={category.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
